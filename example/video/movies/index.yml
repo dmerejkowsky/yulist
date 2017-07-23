@@ -1,5 +1,7 @@
 title: Movies
 
 toc:
-  - mcu
-  - star_wars
+  - path: mcu
+    text: Marvel Cinematic Universe
+  - path: star_wars
+    text: Star Wars

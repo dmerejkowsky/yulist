@@ -1,10 +1,10 @@
 title: Software
 
 intro:
-     |
-     Here's a list of pieces of software I found or use.
+  |
+  Here's a list of pieces of software I found or use.
 
-     First, a unsorted list:
+  First, a unsorted list:
 
 outro:
   |
@@ -20,5 +20,7 @@ items:
     link: "https://asciinema.org"
 
 toc:
-  - build/index
-  - python/index
+  - text: Builing stuff
+    path: build/index
+  - text: For Python
+    path: python/index

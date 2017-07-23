@@ -26,6 +26,6 @@ class Parser():
             yield from self._parse_toc_entry(yml_path, entry)
 
     def _parse_toc_entry(self, yml_path, entry):
-        entry_path = yml_path.parent / entry
+        entry_path = yml_path.parent / entry["path"]
         yml_path = entry_path.with_suffix(".yml")
         yield from self._parse_file(yml_path)

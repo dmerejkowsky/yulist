@@ -1,5 +1,7 @@
 title: Stuff to watch
 
 toc:
-  - movies/index
-  - series/index
+  - path: movies/index
+    text: Movies
+  - path: series/index
+    text: Series

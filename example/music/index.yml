@@ -3,6 +3,9 @@ title: Music
 outro: "Playlists:"
 
 toc:
-  - covers
-  - morning
-  - evening
+  - path: covers
+    text: Cover songs
+  - path: morning
+    text: Morning songs
+  - path: evening
+    text: Evening songs

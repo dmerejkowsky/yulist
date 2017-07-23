@@ -64,15 +64,13 @@ class Generator():
     def generate_toc_links(self, path, toc_entries):
         res = list()
         for entry in toc_entries:
+            entry_path = entry["path"]
+            entry_text = entry["text"]
             parent_str = str(path.parent)
             if parent_str == ".":
                 parent_str = "/"
             else:
                 parent_str = "/" + parent_str + "/"
-            link = parent_str + entry + "." + self.output_format
-            if entry.endswith("/index"):
-                text = "/".join(entry.split("/")[:-1])
-            else:
-                text = entry
-            res.append({"link": link, "text": text})
+            link = parent_str + entry_path + "." + self.output_format
+            res.append({"link": link, "text": entry["text"]})
         return res

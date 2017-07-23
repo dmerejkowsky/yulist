@@ -6,7 +6,9 @@ def test_parse(example_path):
     items = list(parser.parse())
     first = items[0]
     assert first["title"] == "Welcome to YuList"
-    assert first["toc"] == ["software/index", "music/index", "text/index", "video/index"]
+    expected_paths = ["software/index", "music/index", "text/index", "video/index"]
+    actual_paths = [str(x["path"]) for x in first["toc"]]
+    assert expected_paths == actual_paths
     assert str(first["path"]) == "index"
 
     software = items[1]
