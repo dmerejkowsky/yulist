@@ -3,20 +3,28 @@
 import argparse
 import pathlib
 
+import ruamel.yaml
+
 import yulist.builder
 
 
-def build(*, src_path, dest_path, prefix="", output_format="html"):
+def read_conf():
+    cfg_path = pathlib.Path("~/.config/yulist.yml").expanduser()
+    return ruamel.yaml.safe_load(cfg_path.read_text())
+
+
+def build(src_path, dest_path, *, prefix="", url="", media_url=""):
     builder = yulist.builder.Builder(src_path, dest_path,
                                      prefix=prefix,
-                                     output_format=output_format)
+                                     media_url=media_url,
+                                     output_format="html")
     builder.build()
 
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("src", type=pathlib.Path)
-    parser.add_argument("dest", type=pathlib.Path)
-    parser.add_argument("--prefix")
-    args = parser.parse_args()
-    build(src_path=args.src, dest_path=args.dest, prefix=args.prefix)
+    config = read_conf()
+    src = pathlib.Path(config["src"])
+    dest = pathlib.Path(config["dest"])
+    media_url = pathlib.Path(config["media"]["url"])
+    prefix = config.get("web", {}).get("prefix", "")
+    build(src, dest, prefix=prefix, media_url=media_url)

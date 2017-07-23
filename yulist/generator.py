@@ -10,8 +10,9 @@ def remove_enclosing_p(html):
 
 
 class Generator():
-    def __init__(self, *, output_format, prefix=""):
+    def __init__(self, *, output_format, prefix="", media_url=""):
         self.output_format = output_format
+        self.media_url = media_url
         self.prefix = prefix
         loader = jinja2.PackageLoader("yulist", "templates")
         self.jinja_env = jinja2.Environment(loader=loader,
@@ -60,6 +61,7 @@ class Generator():
 
     def render(self, template_name, data):
         data["prefix"] = self.prefix
+        data["media_url"] = self.media_url
         template_name = template_name + "." + self.output_format
         template = self.jinja_env.get_template(template_name)
         return template.render(data)

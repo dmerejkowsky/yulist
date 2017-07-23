@@ -42,9 +42,10 @@ h1, h2 {
   border-right: none;
 }
 
-.song:before {
-  content: "\1F3B5";
+a.media_link {
+  text-decoration: none;
 }
+
 
 .movie:before {
   content: "\1F3AC";

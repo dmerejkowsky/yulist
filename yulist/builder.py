@@ -6,12 +6,16 @@ from yulist.generator import Generator
 
 
 class Builder:
-    def __init__(self, src_path, dest_path, prefix="", output_format="html"):
+    def __init__(self, src_path, dest_path,
+                 prefix="",
+                 output_format="html",
+                 media_url=""):
         self.src_path = src_path
         self.dest_path = dest_path
         self.output_format = output_format
         self.parser = Parser(src_path)
         self.generator = Generator(prefix=prefix,
+                                   media_url=media_url,
                                    output_format=self.output_format)
 
     def build(self):
