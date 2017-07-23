@@ -1,6 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}YuList{% endblock %}
+
+{% block navigation %}
+<div id="navigation">
 {% for bread_crumb in bread_crumbs %}
  {{ bread_crumb }}
 {% endfor %}
+</div>
+{% endblock %}
+
+{% block contents %}
+
 <h1>{{ title }}</h1>
 {% if items %}
   <ul>
@@ -17,3 +28,5 @@
   {% endfor %}
   </ul>
 {% endif %}
+
+{% endblock %}
