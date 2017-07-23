@@ -1,8 +1,10 @@
 title: Music for the morning
 
 items:
-  - artist: "New Order"
+  - type: song
+    artist: "New Order"
     title: "Temptation"
 
-  - artist: "Moby"
+  - type: song
+    artist: "Moby"
     title: "Extreme Ways"

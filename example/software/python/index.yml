@@ -1,5 +1,6 @@
 title: Python
 
 items:
-  - title: "Clint"
-  - link: "https://clint.io"
+  - type: link
+    title: "Clint"
+    link: "https://clint.io"

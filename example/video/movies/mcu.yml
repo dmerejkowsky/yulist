@@ -9,8 +9,10 @@ sort_by:
 
 items:
 
-  - title: "Captain America - First Avenger"
-  - rating: 2
+  - type: movie
+    title: "Captain America - First Avenger"
+    rating: 2
 
-  - title: "Hulk"
-  - rating: 1
+  - type: movie
+    title: "Hulk"
+    rating: 1

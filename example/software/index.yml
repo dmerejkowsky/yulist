@@ -1,9 +1,11 @@
 title: Software
 
 items:
-  - text: "addinclude: Add missing includes to source files"
+  - type: link
+    text: "addinclude: Add missing includes to source files"
     link: "http://addinclude.roboticoverlords.org/"
-  - text: "asciinema: Record and share your terminal sessions"
+  - type: link
+    text: "asciinema: Record and share your terminal sessions"
     link: "https://asciinema.org"
 
 toc:
