@@ -1,0 +1,8 @@
+{{ title }}
+{% for item in items %}
+* {{ item }}
+{% endfor %}
+See also:
+{% for toc_entry in toc %}
+  * {{ toc_entry }}
+{% endfor %}

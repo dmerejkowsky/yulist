@@ -14,6 +14,7 @@ setup(name="yulist",
       packages=find_packages(),
       install_requires=[
         "ruamel.yaml",
+        "jinja2",
       ],
       entry_points={
         "console_scripts": [

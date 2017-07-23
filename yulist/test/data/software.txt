@@ -1,0 +1,11 @@
+Software
+
+* addinclude: Add missing includes to source files - http://addinclude.roboticoverlords.org/
+
+* asciinema: Record and share your terminal sessions - https://asciinema.org
+
+See also:
+
+  * build
+
+  * python
