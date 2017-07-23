@@ -1,4 +1,5 @@
 import copy
+import sys
 
 import jinja2
 import markdown
@@ -41,6 +42,8 @@ class Generator():
         items = page.get("items") or list()
         processed_items = list()
         for item in items:
+            if not item.get("type"):
+                sys.exit(f"Missing type for {item}")
             if item["type"] == "link":
                 item["external"] = True
             out_item = self.generate_item(item)
