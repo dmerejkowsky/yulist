@@ -6,12 +6,12 @@ def test_parse(example_path):
     items = list(parser.parse())
     first = items[0]
     assert first["title"] == "Welcome to YuList"
-    assert first["toc"] == ["software", "music", "text", "video"]
-    assert first["path"] == "index"
+    assert first["toc"] == ["software/index", "music/index", "text/index", "video/index"]
+    assert str(first["path"]) == "index"
 
     software = items[1]
     assert software["title"] == "Software"
-    assert software["path"] == "software/index"
+    assert str(software["path"]) == "software/index"
 
     mcu = [x for x in items if x["title"] == "Marvel Cinematic Universe"][0]
-    assert mcu["path"] == "video/movies/mcu"
+    assert str(mcu["path"]) == "video/movies/mcu"

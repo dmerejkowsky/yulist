@@ -10,7 +10,10 @@ class Generator():
     def generate_page(self, page):
         page_data = dict()
         page_data["title"] = page["title"]
-        page_data["toc"] = page.get("toc") or list()
+        toc = page.get("toc")
+        if toc:
+            toc_links = self.generate_toc_links(page["path"], toc)
+            page_data["toc"] = [self.render("link", x) for x in toc_links]
 
         bread_crumbs = self.generate_bread_crumbs(page["path"])
         as_links = [self.render("link", x) for x in bread_crumbs]
@@ -39,9 +42,24 @@ class Generator():
             "link": "/index." + self.output_format,
             "text": "home"
         }]
-        parts = path.split("/")
-        for i in range(1, len(parts)):
-            text = parts[i-1]
-            link = "/" + "/".join(parts[0:i]) + "/index." + self.output_format
+        for i in range(1, len(path.parts)):
+            text = path.parts[i-1]
+            link = "/" + "/".join(path.parts[0:i]) + "/index." + self.output_format
+            res.append({"link": link, "text": text})
+        return res
+
+    def generate_toc_links(self, path, toc_entries):
+        res = list()
+        for entry in toc_entries:
+            parent_str = str(path.parent)
+            if parent_str == ".":
+                parent_str = "/"
+            else:
+                parent_str = "/" + parent_str + "/"
+            link = parent_str + entry + "." + self.output_format
+            if entry.endswith("/index"):
+                text = "/".join(entry.split("/")[:-1])
+            else:
+                text = entry
             res.append({"link": link, "text": text})
         return res

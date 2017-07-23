@@ -14,7 +14,7 @@ class Parser():
         contents = ruamel.yaml.safe_load(yml_path.read_text())
         rel_path = yml_path.relative_to(self.src_path)
         rel_path = rel_path.with_suffix("")
-        contents["path"] = str(rel_path)
+        contents["path"] = rel_path
         yield contents
         toc = contents.get("toc")
         if toc:
@@ -27,8 +27,5 @@ class Parser():
 
     def _parse_toc_entry(self, yml_path, entry):
         entry_path = yml_path.parent / entry
-        if entry_path.is_dir():
-            yml_path = entry_path / "index.yml"
-        else:
-            yml_path = entry_path.with_suffix(".yml")
+        yml_path = entry_path.with_suffix(".yml")
         yield from self._parse_file(yml_path)

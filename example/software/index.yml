@@ -9,5 +9,5 @@ items:
     link: "https://asciinema.org"
 
 toc:
-  - build
-  - python
+  - build/index
+  - python/index
