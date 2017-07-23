@@ -3,7 +3,7 @@ title: Building stuff
 items:
   - type: link
     text: "Bazel"
-    link: "http:/bazel.io"
+    link: "http://bazel.io"
   - type: link
     text: "Conan"
     link: "https://conan.io"
