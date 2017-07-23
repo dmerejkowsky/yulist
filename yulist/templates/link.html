@@ -1,1 +1,8 @@
-<a href="{{ link }}" {% if external %} target=_blank" {% endif %}>{{ text }}</a>
+{% if external %}
+{% set target = 'target="_blank"' %}
+{% set href = link %}
+{% else %}
+{% set target = '' %}
+{% set href = link | replace("index.html", "") %}
+{% endif %}
+<a href="{{ href }}" {{ target }}>{{ text }}</a>

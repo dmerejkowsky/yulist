@@ -2,15 +2,6 @@
 
 {% block title %}YuList{% endblock %}
 
-{% block navigation %}
-<div id="navigation">
-<ul>
-{% for bread_crumb in bread_crumbs %}
-  <li class="crumb">{{ bread_crumb }}</li>
-{% endfor %}
-</ul>
-</div>
-{% endblock %}
 
 {% block contents %}
 <div id="contents">
@@ -40,5 +31,17 @@
 </div>
 {% endif %}
 
+</div>
+{% endblock %}
+
+
+{% block navigation %}
+<div id="navigation">
+<em>You are here:</em>
+<ul>
+{% for bread_crumb in bread_crumbs %}
+  <li class="crumb">{{ bread_crumb }}</li>
+{% endfor %}
+</ul>
 </div>
 {% endblock %}

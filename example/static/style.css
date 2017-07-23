@@ -24,6 +24,8 @@ h1, h2 {
 
 #navigation ul {
   list-style-type: none;
+  padding: 0px;
+  display: inline;
 }
 
 #navigation li {
@@ -31,7 +33,7 @@ h1, h2 {
 }
 
 #navigation li+li:before {
-  padding: 8px;
+  padding: 2px;
   color: black;
   content: "/\00a0";
 }
@@ -46,8 +48,4 @@ h1, h2 {
 
 .song:after {
   content: "\1F3B5";
-}
-
-.movie:before {
-  content: "\1F3AC";
 }
