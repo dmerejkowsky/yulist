@@ -12,6 +12,10 @@ class Generator():
         page_data["title"] = page["title"]
         page_data["toc"] = page.get("toc") or list()
 
+        bread_crumbs = self.generate_bread_crumbs(page["path"])
+        as_links = [self.render("link", x) for x in bread_crumbs]
+        page_data["bread_crumbs"] = as_links
+
         items = page.get("items") or list()
         processed_items = list()
         for item in items:
@@ -29,3 +33,15 @@ class Generator():
         template_name = template_name + "." + self.output_format
         template = self.jinja_env.get_template(template_name)
         return template.render(data)
+
+    def generate_bread_crumbs(self, path):
+        res = [{
+            "link": "/index." + self.output_format,
+            "text": "home"
+        }]
+        parts = path.split("/")
+        for i in range(1, len(parts)):
+            text = parts[i-1]
+            link = "/" + "/".join(parts[0:i]) + "/index." + self.output_format
+            res.append({"link": link, "text": text})
+        return res

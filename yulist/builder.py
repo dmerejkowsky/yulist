@@ -17,4 +17,4 @@ class Builder:
             out_path.parent.mkdir(parents=True, exist_ok=True)
             page_content = self.generator.generate_page(page)
             out_path.write_text(page_content)
-            print(out_path)
+            print(out_path.relative_to(self.dest_path))

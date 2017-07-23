@@ -1,0 +1,19 @@
+{% for bread_crumb in bread_crumbs %}
+ {{ bread_crumb }}
+{% endfor %}
+<h1>{{ title }}</h1>
+{% if items %}
+  <ul>
+  {% for item in items %}
+    <li>{{ item }}</li>
+  {% endfor %}
+  </ul>
+{% endif %}
+
+{% if toc %}
+  <ul>
+  {% for toc_entry in toc %}
+    <li><a href="./{{ toc_entry }}/index.html">{{ toc_entry }}</a></li>
+  {% endfor %}
+  </ul>
+{% endif %}
