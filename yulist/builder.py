@@ -1,16 +1,17 @@
 import shutil
 
-import yulist.parser
-import yulist.generator
+from yulist.parser import Parser
+from yulist.generator import Generator
 
 
 class Builder:
-    def __init__(self, src_path, dest_path, output_format="html"):
+    def __init__(self, src_path, dest_path, prefix="", output_format="html"):
         self.src_path = src_path
         self.dest_path = dest_path
         self.output_format = output_format
-        self.parser = yulist.parser.Parser(src_path)
-        self.generator = yulist.generator.Generator(output_format=self.output_format)
+        self.parser = Parser(src_path)
+        self.generator = Generator(prefix=prefix,
+                                   output_format=self.output_format)
 
     def build(self):
         self.build_pages()

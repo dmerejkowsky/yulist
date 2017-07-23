@@ -5,4 +5,7 @@
 {% set target = '' %}
 {% set href = link | replace("index.html", "") %}
 {% endif %}
+{% if prefix %}
+{% set href = prefix + href %}
+{% endif %}
 <a href="{{ href }}" {{ target }}>{{ text }}</a>

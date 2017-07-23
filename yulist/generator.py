@@ -4,9 +4,14 @@ import jinja2
 import markdown
 
 
+def remove_enclosing_p(html):
+    return html[3:-4]
+
+
 class Generator():
-    def __init__(self, output_format):
+    def __init__(self, *, output_format, prefix=""):
         self.output_format = output_format
+        self.prefix = prefix
         loader = jinja2.PackageLoader("yulist", "templates")
         self.jinja_env = jinja2.Environment(loader=loader,
                                             trim_blocks=True,
@@ -14,6 +19,7 @@ class Generator():
 
     def generate_page(self, page):
         page_data = copy.copy(page)
+        page_data["prefix"] = self.prefix
 
         intro = page.get("intro")
         if intro:
@@ -45,9 +51,12 @@ class Generator():
 
     def generate_item(self, item):
         item_type = item["type"]
+        if item_type == "markdown":
+            return remove_enclosing_p(markdown.markdown(item["text"]))
         return self.render(item_type, item)
 
     def render(self, template_name, data):
+        data["prefix"] = self.prefix
         template_name = template_name + "." + self.output_format
         template = self.jinja_env.get_template(template_name)
         return template.render(data)
