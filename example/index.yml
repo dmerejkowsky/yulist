@@ -1,5 +1,9 @@
 title: Welcome to YuList
 
+text: This is some text that explains what YuList is
+
+toc_text: Available lists
+
 toc:
   - software/index
   - music/index

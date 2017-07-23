@@ -1,4 +1,7 @@
+import copy
+
 import jinja2
+import markdown
 
 
 class Generator():
@@ -8,9 +11,17 @@ class Generator():
         self.jinja_env = jinja2.Environment(loader=loader)
 
     def generate_page(self, page):
-        page_data = dict()
-        page_data["title"] = page["title"]
+        page_data = copy.copy(page)
+
+        intro = page.get("intro")
+        if intro:
+            page_data["intro"] = markdown.markdown(intro)
+        outro = page.get("outro")
+        if outro:
+            page_data["outro"] = markdown.markdown(outro)
+
         toc = page.get("toc")
+
         if toc:
             toc_links = self.generate_toc_links(page["path"], toc)
             page_data["toc"] = [self.render("link", x) for x in toc_links]

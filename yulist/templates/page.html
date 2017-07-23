@@ -16,6 +16,9 @@
 <div id="contents">
 
 <h1>{{ title }}</h1>
+
+{{ intro }}
+
 {% if items %}
   <ul>
   {% for item in items %}
@@ -24,9 +27,11 @@
   </ul>
 {% endif %}
 
+{{ outro }}
+
 {% if toc %}
 <div id="toc">
-  <h2>Table of contents</h2>
+  <h2>{{ toc_text }}</h2>
   <ul>
   {% for toc_entry in toc %}
     <li>{{ toc_entry }}</li>

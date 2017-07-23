@@ -13,8 +13,9 @@ setup(name="yulist",
       license="BSD",
       packages=find_packages(),
       install_requires=[
-        "ruamel.yaml",
         "jinja2",
+        "markdown",
+        "ruamel.yaml",
       ],
       entry_points={
         "console_scripts": [
