@@ -10,7 +10,7 @@ def test_text_generator(test_data):
     page = ruamel.yaml.safe_load(in_yml.read_text())
     out_html = test_data / "software.txt"
     expected = out_html.read_text()
-    generator = yulist.generator.TextGenerator()
+    generator = yulist.generator.Generator(output_format="txt")
     actual = generator.generate_page(page)
     actual_path = test_data / "software.actual.txt"
     if actual != expected:
