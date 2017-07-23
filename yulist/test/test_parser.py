@@ -3,8 +3,7 @@ import yulist.parser
 
 def test_parse(example_path):
     parser = yulist.parser.Parser(example_path)
-    parser.parse()
-    items = parser.items
+    items = list(parser.parse())
     first = items[0]
     assert first["title"] == "Welcome to YuList"
     assert first["toc"] == ["software", "music", "text", "video"]
