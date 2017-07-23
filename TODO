@@ -2,7 +2,7 @@
 * get rid of output_format (will be html only)
 * command to generate yaml data from path
 
-* get rid of comments, and never publish
-  yulist
+* get rid of comments, and never publish yulist
+* get rid of prefix
 
 * search?
