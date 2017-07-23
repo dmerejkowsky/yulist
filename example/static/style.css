@@ -39,3 +39,15 @@ h1, h2 {
 #navigation li:last-child {
   border-right: none;
 }
+
+.song:before {
+  content: "\1F3B5";
+}
+
+.song:after {
+  content: "\1F3B5";
+}
+
+.movie:before {
+  content: "\1F3AC";
+}
