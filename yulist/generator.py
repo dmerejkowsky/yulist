@@ -22,6 +22,8 @@ class Generator():
         items = page.get("items") or list()
         processed_items = list()
         for item in items:
+            if item["type"] == "link":
+                item["external"] = True
             out_item = self.generate_item(item)
             processed_items.append(out_item)
         page_data["items"] = processed_items

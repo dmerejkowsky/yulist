@@ -4,13 +4,16 @@
 
 {% block navigation %}
 <div id="navigation">
+<ul>
 {% for bread_crumb in bread_crumbs %}
- {{ bread_crumb }}
+  <li class="crumb">{{ bread_crumb }}</li>
 {% endfor %}
+</ul>
 </div>
 {% endblock %}
 
 {% block contents %}
+<div id="contents">
 
 <h1>{{ title }}</h1>
 {% if items %}
@@ -22,11 +25,15 @@
 {% endif %}
 
 {% if toc %}
+<div id="toc">
+  <h2>Table of contents</h2>
   <ul>
   {% for toc_entry in toc %}
     <li>{{ toc_entry }}</li>
   {% endfor %}
   </ul>
+</div>
 {% endif %}
 
+</div>
 {% endblock %}

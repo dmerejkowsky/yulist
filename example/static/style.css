@@ -1,0 +1,41 @@
+body {
+  margin: 5% auto;
+  background: #f2f2f2;
+  color: #444444;
+  font-family: 'Courier New';
+  font-size: 14px;
+  line-height: 1.6;
+  text-shadow: 0 1px 0 #ffffff;
+  max-width: 73%;
+}
+
+a {
+  color: #444444;
+  text-decoration: underline;
+}
+
+a:hover {
+  border-bottom: 0;
+}
+
+h1, h2 {
+  line-height: 1.3;
+}
+
+#navigation ul {
+  list-style-type: none;
+}
+
+#navigation li {
+  display: inline;
+}
+
+#navigation li+li:before {
+  padding: 8px;
+  color: black;
+  content: "/\00a0";
+}
+
+#navigation li:last-child {
+  border-right: none;
+}
