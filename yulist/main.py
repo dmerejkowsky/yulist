@@ -1,6 +1,5 @@
 """ Main entry point """
 
-import argparse
 import pathlib
 
 import ruamel.yaml

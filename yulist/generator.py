@@ -81,7 +81,6 @@ class Generator():
         res = list()
         for entry in toc_entries:
             entry_path = entry["path"]
-            entry_text = entry["text"]
             parent_str = str(path.parent)
             if parent_str == ".":
                 parent_str = "/"
