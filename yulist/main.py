@@ -24,6 +24,6 @@ def main():
     config = read_conf()
     src = pathlib.Path(config["src"])
     dest = pathlib.Path(config["dest"])
-    media_url = pathlib.Path(config["media"]["url"])
+    media_url = config["media"]["url"]
     prefix = config.get("web", {}).get("prefix", "")
     build(src, dest, prefix=prefix, media_url=media_url)
