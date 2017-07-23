@@ -8,7 +8,9 @@ class Generator():
     def __init__(self, output_format):
         self.output_format = output_format
         loader = jinja2.PackageLoader("yulist", "templates")
-        self.jinja_env = jinja2.Environment(loader=loader)
+        self.jinja_env = jinja2.Environment(loader=loader,
+                                            trim_blocks=True,
+                                            lstrip_blocks=True)
 
     def generate_page(self, page):
         page_data = copy.copy(page)
