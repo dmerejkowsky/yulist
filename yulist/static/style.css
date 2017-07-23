@@ -45,7 +45,3 @@ h1, h2 {
 .song:before {
   content: "\1F3B5";
 }
-
-.song:after {
-  content: "\1F3B5";
-}
