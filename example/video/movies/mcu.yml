@@ -1,0 +1,16 @@
+title: Marvel Cinematic Universe
+
+intro:
+     |
+     All the movies from the Marvel Cinematic Universe
+
+sort_by:
+  - rating
+
+items:
+
+  - title: "Captain America - First Avenger"
+  - rating: 2
+
+  - title: "Hulk"
+  - rating: 1
