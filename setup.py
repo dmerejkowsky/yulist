@@ -15,6 +15,7 @@ setup(name="yulist",
       install_requires=[
         "jinja2",
         "markdown",
+        "pymongo",
         "ruamel.yaml",
       ],
       entry_points={
