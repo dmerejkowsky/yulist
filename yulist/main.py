@@ -12,11 +12,8 @@ def read_conf():
     return ruamel.yaml.safe_load(cfg_path.read_text())
 
 
-def build(src_path, dest_path, *, prefix="", url="", media_url=""):
-    builder = yulist.builder.Builder(src_path, dest_path,
-                                     prefix=prefix,
-                                     media_url=media_url,
-                                     output_format="html")
+def build(src_path, dest_path, *, media_url=""):
+    builder = yulist.builder.Builder(src_path, dest_path, media_url=media_url)
     builder.build()
 
 
@@ -25,5 +22,4 @@ def main():
     src = pathlib.Path(config["src"])
     dest = pathlib.Path(config["dest"])
     media_url = config["media"]["url"]
-    prefix = config.get("web", {}).get("prefix", "")
-    build(src, dest, prefix=prefix, media_url=media_url)
+    build(src, dest, media_url=media_url)

@@ -10,10 +10,8 @@ def remove_enclosing_p(html):
 
 
 class Generator():
-    def __init__(self, *, output_format, prefix="", media_url=""):
-        self.output_format = output_format
+    def __init__(self, *, media_url=""):
         self.media_url = media_url
-        self.prefix = prefix
         loader = jinja2.PackageLoader("yulist", "templates")
         self.jinja_env = jinja2.Environment(loader=loader,
                                             trim_blocks=True,
@@ -21,25 +19,57 @@ class Generator():
 
     def generate_page(self, page):
         page_data = copy.copy(page)
-        page_data["prefix"] = self.prefix
 
+        page_data["intro"] = self.get_intro(page)
+        page_data["outro"] = self.get_outro(page)
+        page_data["toc"] = self.get_toc(page)
+        page_data["bread_crumbs"] = self.get_bread_crumbs(page)
+        page_data["items"] = self.get_items(page)
+
+        return self.render("page", page_data)
+
+    @staticmethod
+    def get_intro(page):
         intro = page.get("intro")
         if intro:
-            page_data["intro"] = markdown.markdown(intro)
+            return markdown.markdown(intro)
+
+    @staticmethod
+    def get_outro(page):
         outro = page.get("outro")
         if outro:
-            page_data["outro"] = markdown.markdown(outro)
+            return markdown.markdown(outro)
 
+    def get_toc(self, page):
         toc = page.get("toc")
+        if not toc:
+            return None
+        links = list()
+        for entry in toc:
+            entry_path = entry["path"]
+            parent_str = str(page["path"].parent)
+            if parent_str == ".":
+                parent_str = "/"
+            else:
+                parent_str = "/" + parent_str + "/"
+            link = parent_str + entry_path + ".html"
+            links.append({"link": link, "text": entry["text"]})
+        return [self.render("link", x) for x in links]
 
-        if toc:
-            toc_links = self.generate_toc_links(page["path"], toc)
-            page_data["toc"] = [self.render("link", x) for x in toc_links]
+    def get_bread_crumbs(self, page):
+        links = [{
+            "link": "/index.html",
+            "text": "home"
+        }]
+        page_parts = page["path"].parts
+        for i in range(1, len(page_parts)):
+            text = page_parts[i-1]
+            link = "/" + "/".join(page_parts[0:i]) + "/index.html"
+            links.append({"link": link, "text": text})
+        res = [self.render("link", x) for x in links]
+        return res
 
-        bread_crumbs = self.generate_bread_crumbs(page["path"])
-        as_links = [self.render("link", x) for x in bread_crumbs]
-        page_data["bread_crumbs"] = as_links
-
+    def get_items(self, page):
         items = page.get("items") or list()
         processed_items = list()
         for item in items:
@@ -47,45 +77,18 @@ class Generator():
                 sys.exit(f"Missing type for {item}")
             if item["type"] == "link":
                 item["external"] = True
-            out_item = self.generate_item(item)
+            out_item = self.process_item(item)
             processed_items.append(out_item)
-        page_data["items"] = processed_items
+        return processed_items
 
-        return self.render("page", page_data)
-
-    def generate_item(self, item):
+    def process_item(self, item):
         item_type = item["type"]
         if item_type == "markdown":
             return remove_enclosing_p(markdown.markdown(item["text"]))
         return self.render(item_type, item)
 
     def render(self, template_name, data):
-        data["prefix"] = self.prefix
         data["media_url"] = self.media_url
-        template_name = template_name + "." + self.output_format
+        template_name = template_name + ".html"
         template = self.jinja_env.get_template(template_name)
         return template.render(data)
-
-    def generate_bread_crumbs(self, path):
-        res = [{
-            "link": "/index." + self.output_format,
-            "text": "home"
-        }]
-        for i in range(1, len(path.parts)):
-            text = path.parts[i-1]
-            link = "/" + "/".join(path.parts[0:i]) + "/index." + self.output_format
-            res.append({"link": link, "text": text})
-        return res
-
-    def generate_toc_links(self, path, toc_entries):
-        res = list()
-        for entry in toc_entries:
-            entry_path = entry["path"]
-            parent_str = str(path.parent)
-            if parent_str == ".":
-                parent_str = "/"
-            else:
-                parent_str = "/" + parent_str + "/"
-            link = parent_str + entry_path + "." + self.output_format
-            res.append({"link": link, "text": entry["text"]})
-        return res
