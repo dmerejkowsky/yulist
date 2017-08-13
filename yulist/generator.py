@@ -5,10 +5,6 @@ import jinja2
 import markdown
 
 
-def remove_enclosing_p(html):
-    return html[3:-4]
-
-
 class Generator():
     def __init__(self, *, media_url=""):
         self.media_url = media_url
@@ -83,8 +79,6 @@ class Generator():
 
     def process_item(self, item):
         item_type = item["type"]
-        if item_type == "markdown":
-            return remove_enclosing_p(markdown.markdown(item["text"]))
         return self.render(item_type, item)
 
     def render(self, template_name, data):
