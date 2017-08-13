@@ -7,11 +7,10 @@ from yulist.generator import Generator
 app = flask.Flask("yulist")
 
 
-def configure_app(*, db, media_url, debug):
+def configure_app(*, db, debug):
     app.debug = debug
     app.db = db
-    app.media_url = media_url
-    app.generator = Generator(media_url=media_url)
+    app.generator = Generator()
 
 
 @app.route("/")
@@ -53,8 +52,7 @@ def display_page(page_path):
 def main():
     client = pymongo.MongoClient()
     db = client.yulist
-    media_url = "https://dmerej.info/media"
-    configure_app(db=db, media_url=media_url, debug=True)
+    configure_app(db=db, debug=True)
     app.run()
 
 

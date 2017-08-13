@@ -7,8 +7,7 @@ import markdown
 
 
 class Generator():
-    def __init__(self, *, media_url=""):
-        self.media_url = media_url
+    def __init__(self):
         loader = jinja2.PackageLoader("yulist", "templates")
         self.jinja_env = jinja2.Environment(loader=loader,
                                             trim_blocks=True,
@@ -90,7 +89,6 @@ class Generator():
         return self.render(item_type, item)
 
     def render(self, template_name, data):
-        data["media_url"] = self.media_url
         template_name = template_name + ".html"
         template = self.jinja_env.get_template(template_name)
         return template.render(data)

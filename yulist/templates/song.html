@@ -1,9 +1,6 @@
 <span class="song">
   {{ artist }} - &ldquo;{{ title }}&rdquo;
-  {% if media_path %}
-  <a class="media_link"
-    href="{{ media_url }}/{{ media_path }}">
-    🎵
-  </a>
+  {% if media_url %}
+  <a class="media_link" target="_blank" href="{{ media_url }}">🎵</a>
   {% endif %}
 </span>
