@@ -33,5 +33,5 @@ def test_perform_search(browser):
     browser.open("/search?pattern=bazel")
     assert "Search results" in browser.page
     assert "bazel.io" in browser.page
-    permalink = browser.find_link("🔗").attrs["href"]
-    assert "software/build" in permalink
+    page_link = browser.find_link("software/build/index")
+    assert page_link
