@@ -1,16 +1,37 @@
-from yulist.parser import Parser
-from yulist.dumper import Dumper
-
 import pytest
-
-
-@pytest.fixture(autouse=True)
-def init_db(example_path, db):
-    parser = Parser(example_path)
-    dumper = Dumper(parser, db)
-    dumper.dump()
 
 
 def test_index(browser):
     browser.open("/")
     assert "Welcome" in browser.page
+
+
+def test_follow_links(browser):
+    # Following table of contents
+    browser.open("/index")
+    assert "Welcome" in browser.page
+    music_link = browser.find_link("Music")
+    assert "Music" in browser.page
+    browser.click_link(music_link)
+    assert "Cover" in browser.page
+    covers_link = browser.find_link("Cover songs")
+    browser.click_link(covers_link)
+    assert "favorites" in browser.page
+
+    # Following navigation:
+    music_link = browser.find_link("music")
+    browser.click_link(music_link)
+    assert "Music" in browser.page
+
+
+def test_search_form(browser):
+    browser.open("/search")
+    assert "form" in browser.page
+
+
+def test_perform_search(browser):
+    browser.open("/search?pattern=bazel")
+    assert "Search results" in browser.page
+    assert "bazel.io" in browser.page
+    permalink = browser.find_link("🔗").attrs["href"]
+    assert "software/build" in permalink

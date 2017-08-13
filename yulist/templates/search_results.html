@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}YuList - Search Results {% endblock %}
+
+{% block contents %}
+<h1> Search results for '{{ pattern }}' </h1>
+
+{% if results %}
+  <ul>
+  {% for item, page_link in results %}
+    <li>{{ item }} (in <a href="{{ page_link }}">{{ page_link }}</a>)</li>
+  {% endfor %}
+  </ul>
+{% else %}
+  <p>Nothing found :/ </p>
+{% endif %}
+
+{% endblock %}

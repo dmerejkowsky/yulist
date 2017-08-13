@@ -3,7 +3,7 @@ import pymongo
 
 def test_stores_and_search_docs():
     client = pymongo.MongoClient()
-    db = client.yulist
+    db = client.test_yulist
     pages = db.pages
     pages.drop()
     page1 = pages.insert_one(
@@ -50,3 +50,9 @@ def test_stores_and_search_docs():
         }
     )
     assert len(list(cursor)) == 1
+
+    cursor = pages.find({"_id": page1})
+    print(list(cursor))
+
+    cursor = items.find({"page_id": page1})
+    print(list(cursor))

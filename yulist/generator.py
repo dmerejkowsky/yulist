@@ -1,4 +1,5 @@
 import copy
+import pathlib
 import sys
 
 import jinja2
@@ -13,16 +14,24 @@ class Generator():
                                             trim_blocks=True,
                                             lstrip_blocks=True)
 
-    def generate_page(self, page):
+    def generate_page(self, page, items):
         page_data = copy.copy(page)
 
         page_data["intro"] = self.get_intro(page)
         page_data["outro"] = self.get_outro(page)
         page_data["toc"] = self.get_toc(page)
         page_data["bread_crumbs"] = self.get_bread_crumbs(page)
-        page_data["items"] = self.get_items(page)
+        page_data["items"] = self.get_items(items)
 
         return self.render("page", page_data)
+
+    def generate_search_results(self, pattern, items):
+        page_links = [x["page_link"] for x in items]
+        generated_items = self.get_items(items)
+        data = dict()
+        data["pattern"] = pattern
+        data["results"] = [(x, x_link) for x, x_link in zip(generated_items, page_links)]
+        return self.render("search_results", data)
 
     @staticmethod
     def get_intro(page):
@@ -43,30 +52,29 @@ class Generator():
         links = list()
         for entry in toc:
             entry_path = entry["path"]
-            parent_str = str(page["path"].parent)
+            parent_str = str(pathlib.Path(page["path"]).parent)
             if parent_str == ".":
                 parent_str = "/"
             else:
                 parent_str = "/" + parent_str + "/"
-            link = parent_str + entry_path + ".html"
+            link = parent_str + entry_path
             links.append({"link": link, "text": entry["text"]})
         return [self.render("link", x) for x in links]
 
     def get_bread_crumbs(self, page):
         links = [{
-            "link": "/index.html",
+            "link": "/index",
             "text": "home"
         }]
-        page_parts = page["path"].parts
+        page_parts = pathlib.Path(page["path"]).parts
         for i in range(1, len(page_parts)):
             text = page_parts[i-1]
-            link = "/" + "/".join(page_parts[0:i]) + "/index.html"
+            link = "/" + "/".join(page_parts[0:i]) + "/index"
             links.append({"link": link, "text": text})
         res = [self.render("link", x) for x in links]
         return res
 
-    def get_items(self, page):
-        items = page.get("items") or list()
+    def get_items(self, items):
         processed_items = list()
         for item in items:
             if not item.get("type"):

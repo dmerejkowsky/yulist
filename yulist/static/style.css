@@ -14,12 +14,21 @@ a {
   text-decoration: underline;
 }
 
+a:visited {
+  color: #808080;
+}
+
 a:hover {
   border-bottom: 0;
 }
 
 h1, h2 {
   line-height: 1.3;
+}
+
+h6.invisible {
+  line-height: 0;
+  font-size: 0px;
 }
 
 #navigation ul {
@@ -44,9 +53,4 @@ h1, h2 {
 
 a.media_link {
   text-decoration: none;
-}
-
-
-.movie:before {
-  content: "\1F3AC";
 }

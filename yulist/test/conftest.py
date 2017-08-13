@@ -1,8 +1,12 @@
 import pathlib
 
+import bs4
 import pymongo
 
 import yulist.server
+from yulist.parser import Parser
+from yulist.dumper import Dumper
+
 
 import pytest
 
@@ -23,7 +27,7 @@ def example_path():
 
 
 @pytest.fixture
-def db():
+def empty_db():
     client = pymongo.MongoClient()
     db = client.test_yulist
     yield db
@@ -32,8 +36,22 @@ def db():
 
 
 @pytest.fixture
-def app():
-    return yulist.server.app
+def full_db(example_path, empty_db):
+    parser = Parser(example_path)
+    dumper = Dumper(parser, empty_db)
+    dumper.dump()
+    return dumper.db
+
+
+@pytest.fixture
+def app(full_db):
+    res = yulist.server.app
+    yulist.server.configure_app(
+        db=full_db, debug=True,
+        media_url="http://example.com/media"
+    )
+
+    return res
 
 
 class Browser():
@@ -49,12 +67,16 @@ class Browser():
     def html_soup(self):
         return bs4.BeautifulSoup(self.page, "html.parser")
 
-    def clink_link(self, link):
+    def find_link(self, text):
+        link = self.html_soup.find("a", text=text)
+        return link
+
+    def click_link(self, link):
         assert link is not None
         href = link.attrs["href"]
         self.open(href)
 
 
-@pytest.fixture()
-def browser(client):
+@pytest.fixture
+def browser(app, client):
     return Browser(client)
