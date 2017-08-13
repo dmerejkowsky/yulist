@@ -4,15 +4,12 @@ intro:
   |
   All the movies from the Marvel Cinematic Universe
 
-sort_by:
-  - rating
+
+items_type: movie
 
 items:
-
-  - type: movie
-    title: "Captain America - First Avenger"
+  - title: "Captain America - First Avenger"
     rating: 2
 
-  - type: movie
-    title: "Hulk"
+  - title: "Hulk"
     rating: 1

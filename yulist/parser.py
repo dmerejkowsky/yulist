@@ -10,7 +10,11 @@ class Parser():
         yield from self._parse_file(top_yml)
 
     def _parse_file(self, yml_path):
-        contents = ruamel.yaml.safe_load(yml_path.read_text())
+        try:
+            contents = ruamel.yaml.safe_load(yml_path.read_text())
+        except ruamel.yaml.parser.ParserError as error:
+            print(error)
+            raise Exception("Invaild yaml at", yml_path) from None
         rel_path = yml_path.relative_to(self.src_path)
         rel_path = rel_path.with_suffix("")
         contents["path"] = rel_path

@@ -1,6 +1,5 @@
 import copy
 import pathlib
-import sys
 
 import jinja2
 import markdown
@@ -77,7 +76,7 @@ class Generator():
         processed_items = list()
         for item in items:
             if not item.get("type"):
-                sys.exit(f"Missing type for {item}")
+                raise Exception("Missing type for %s" % item)
             if item["type"] == "link":
                 item["external"] = True
             out_item = self.process_item(item)

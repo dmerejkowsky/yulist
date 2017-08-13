@@ -30,8 +30,12 @@ class Dumper:
             }
         ).inserted_id
         for item in page.get("items", list()):
-            self.dump_item(page_id, item)
+            item_type = page.get("items_type")
+            if not item_type:
+                raise Exception("Page %s does not contain items_type" % page["path"])
+            self.dump_item(item, page_id=page_id, item_type=item_type)
 
-    def dump_item(self, page_id, item):
+    def dump_item(self, item, *, page_id, item_type):
         item["page_id"] = page_id
+        item["type"] = item_type
         self.db.items.insert_one(item)

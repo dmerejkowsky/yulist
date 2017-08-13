@@ -10,13 +10,13 @@ outro:
   |
   And here are some other pieces of software, grouped by categories.
 
+items_type: link
+
 
 items:
-  - type: link
-    text: "addinclude: Add missing includes to source files"
+  - text: "addinclude: Add missing includes to source files"
     link: "http://addinclude.roboticoverlords.org/"
-  - type: link
-    text: "asciinema: Record and share your terminal sessions"
+  - text: "asciinema: Record and share your terminal sessions"
     link: "https://asciinema.org"
 
 toc:

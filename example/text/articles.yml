@@ -1,6 +1,7 @@
 title: Articles
 
+items_type: link
+
 items:
-  - type: link
-    text: "Foo is dead, long live foo"
+  - text: "Foo is dead, long live foo"
     link: "http://example.com/foo"
