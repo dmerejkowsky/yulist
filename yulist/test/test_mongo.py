@@ -4,6 +4,13 @@ import pymongo
 def test_stores_and_search_docs():
     client = pymongo.MongoClient()
     db = client.yulist
+    pages = db.pages
+    pages.drop()
+    page1 = pages.insert_one(
+        {
+            "name": "songs"
+        }
+    ).inserted_id
     items = db.items
     items.drop()
     items.create_index(
@@ -12,18 +19,20 @@ def test_stores_and_search_docs():
             ("artist", pymongo.TEXT),
         ]
     )
-    items.insert_one(
+    id1 = items.insert_one(
         {
             "type": "song",
             "title": "Lâche l'affaire",
             "artist": "Renaud",
+            "page_id": page1
         }
     )
-    items.insert_one(
+    id2 = items.insert_one(
         {
             "type": "song",
             "title": "I Will Survive",
             "artist": "Gloria Gaynor",
+            "page_id": page1
         }
     )
 
