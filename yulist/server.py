@@ -49,11 +49,18 @@ def display_page(page_path):
     return res
 
 
-def main():
+def setup():
     client = pymongo.MongoClient()
     db = client.yulist
     configure_app(db=db, debug=True)
-    app.run()
+
+
+# call setup() here for uwsgi
+setup()
+
+
+def main():
+    app.run(port=1234)
 
 
 if __name__ == "__main__":
