@@ -50,9 +50,13 @@ def display_page(page_path):
     return res
 
 
-if __name__ == "__main__":
+def main():
     client = pymongo.MongoClient()
     db = client.yulist
     media_url = "https://dmerej.info/media"
     configure_app(db=db, media_url=media_url, debug=True)
     app.run()
+
+
+if __name__ == "__main__":
+    main()
