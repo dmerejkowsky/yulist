@@ -4,7 +4,6 @@ import ruamel.yaml
 class Parser():
     def __init__(self, src_path):
         self.src_path = src_path
-        self.items = list()
 
     def parse(self):
         top_yml = self.src_path / "index.yml"
