@@ -15,7 +15,6 @@ class Parser():
         rel_path = yml_path.relative_to(self.src_path)
         rel_path = rel_path.with_suffix("")
         contents["path"] = rel_path
-        print("setting contents['path'] to", rel_path)
         yield contents
         toc = contents.get("toc")
         if toc:
