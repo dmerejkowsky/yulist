@@ -1,18 +1,7 @@
 import pymongo
 
-import pytest
-
 from yulist.parser import Parser
 from yulist.dumper import Dumper
-
-
-@pytest.fixture
-def db():
-    client = pymongo.MongoClient()
-    db = client.test_yulist
-    yield db
-    for collection in db.collection_names():
-        db.drop_collection(collection)
 
 
 def test_dumps_to_mongo(example_path, db):

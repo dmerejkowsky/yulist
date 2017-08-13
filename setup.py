@@ -13,6 +13,7 @@ setup(name="yulist",
       license="BSD",
       packages=find_packages(),
       install_requires=[
+        "flask",
         "jinja2",
         "markdown",
         "pymongo",
