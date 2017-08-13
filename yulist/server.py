@@ -7,8 +7,7 @@ from yulist.generator import Generator
 app = flask.Flask("yulist")
 
 
-def configure_app(*, db, debug):
-    app.debug = debug
+def configure_app(*, db):
     app.db = db
     app.generator = Generator()
 
@@ -52,7 +51,7 @@ def display_page(page_path):
 def setup():
     client = pymongo.MongoClient()
     db = client.yulist
-    configure_app(db=db, debug=True)
+    configure_app(db=db)
 
 
 # call setup() here for uwsgi
@@ -60,6 +59,7 @@ setup()
 
 
 def main():
+    app.debug = True
     app.run(port=1234)
 
 

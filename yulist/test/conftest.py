@@ -46,7 +46,7 @@ def full_db(example_path, empty_db):
 @pytest.fixture
 def app(full_db):
     res = yulist.server.app
-    yulist.server.configure_app(db=full_db, debug=True)
+    yulist.server.configure_app(db=full_db)
 
     return res
 
