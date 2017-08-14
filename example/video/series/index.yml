@@ -1,1 +1,10 @@
 title: Series
+
+private: true
+items_type: link
+
+items:
+  - text: Guilty Pleasure One
+    link: http://guilty/one.html
+  - text: Guilty Pleaser Two
+    link: http://guilty/two.html

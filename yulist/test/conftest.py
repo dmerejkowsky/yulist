@@ -60,6 +60,11 @@ class Browser():
         assert 200 <= response.status_code < 400
         self.page = response.data.decode()
 
+    def submit_form(self, url, **kwargs):
+        response = self._flask_client.post(url, data=kwargs, follow_redirects=True)
+        assert 200 <= response.status_code < 400
+        self.page = response.data.decode()
+
     @property
     def html_soup(self):
         return bs4.BeautifulSoup(self.page, "html.parser")

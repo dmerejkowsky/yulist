@@ -10,4 +10,4 @@ def test_dumps_to_mongo(example_path, empty_db):
     dumper.dump()
     db = dumper.db
     assert db.pages.count() == 15
-    assert db.items.count() == 10
+    assert db.items.count() == 12
