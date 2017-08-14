@@ -3,3 +3,9 @@ section inside item list
 maybe using '---' to separate documents ?
 
 signup page?
+
+admin page?
+
+custom page? (just markdown)->
+  'pages/about'
+  'pages/rules'
