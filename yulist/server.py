@@ -110,9 +110,16 @@ def do_search(db, pattern):
     cursor = db.items.find({"$text": {"$search": pattern}})
     for item in cursor:
         page = db.pages.find({"_id": item["page_id"]})[0]
-        page_link = page["path"]
-        item["page_link"] = page_link
-        yield item
+        if can_show(page):
+            page_link = page["path"]
+            item["page_link"] = page_link
+            yield item
+
+
+def can_show(page):
+    if page["private"] and not flask_login.current_user.is_authenticated:
+        return False
+    return True
 
 
 @app.route("/<path:page_path>")
@@ -121,10 +128,10 @@ def display_page(page_path):
     itemsdb = db.items
     pages = db.pages
     page = pages.find({"path": page_path})[0]
-    if page["private"] and not flask_login.current_user.is_authenticated:
-        items = list()
-    else:
+    if can_show(page):
         items = itemsdb.find({"page_id": page["_id"]})
+    else:
+        items = list()
     generator = app.generator
     generator.current_user = flask_login.current_user
     res = generator.generate_page(page, items)
