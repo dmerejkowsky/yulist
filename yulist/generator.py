@@ -11,6 +11,7 @@ class Generator():
         self.jinja_env = jinja2.Environment(loader=loader,
                                             trim_blocks=True,
                                             lstrip_blocks=True)
+        self.current_user = None
 
     def generate_page(self, page, items):
         page_data = copy.copy(page)
@@ -88,6 +89,7 @@ class Generator():
         return self.render(item_type, item)
 
     def render(self, template_name, data):
+        data["current_user"] = self.current_user
         template_name = template_name + ".html"
         template = self.jinja_env.get_template(template_name)
         return template.render(data)

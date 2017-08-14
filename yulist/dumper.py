@@ -7,8 +7,8 @@ class Dumper:
         self.db = db
 
     def dump(self):
-        for collection in self.db.collection_names():
-            self.db.drop_collection(collection)
+        self.db.items.drop()
+        self.db.pages.drop()
         self.db.items.create_index(
             [
                 ("title", pymongo.TEXT),
@@ -27,6 +27,7 @@ class Dumper:
                 "intro": page.get("intro"),
                 "outro": page.get("outro"),
                 "toc": page.get("toc"),
+                "private": page.get("private"),
             }
         ).inserted_id
         for item in page.get("items", list()):

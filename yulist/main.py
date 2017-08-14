@@ -3,15 +3,10 @@
 import pathlib
 
 import pymongo
-import ruamel.yaml
 
+import yulist.config
 import yulist.parser
 import yulist.dumper
-
-
-def read_conf():
-    cfg_path = pathlib.Path("~/.config/yulist.yml").expanduser()
-    return ruamel.yaml.safe_load(cfg_path.read_text())
 
 
 def dump(src_path, db):
@@ -22,10 +17,8 @@ def dump(src_path, db):
 
 
 def main():
-    config = read_conf()
+    config = yulist.config.read_conf()
     client = pymongo.MongoClient()
     db = client.yulist
-    for collection in db.collection_names():
-        db.drop_collection(collection)
     src = pathlib.Path(config["src"])
     dump(src, db)

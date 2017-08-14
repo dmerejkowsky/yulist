@@ -51,6 +51,11 @@ h6.invisible {
   border-right: none;
 }
 
+div#session  {
+  float: right;
+  text-align: right;
+}
+
 a.media_link {
   text-decoration: none;
 }

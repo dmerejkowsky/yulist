@@ -2,11 +2,19 @@
 
 {% block title %}YuList{% endblock %}
 
-
 {% block contents %}
 <div id="contents">
 
 <h1>{{ title }}</h1>
+
+{% if current_user.is_authenticated %}
+<div id="session">
+<p>
+Logged in as {{ current_user.user_id }} <br />
+<a href="/logout">logout</a>
+</p>
+</div>
+{% endif %}
 
 {% if intro %}
 {{ intro }}

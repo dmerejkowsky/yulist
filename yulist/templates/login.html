@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Yulist - Log in{% endblock %}
+
+{% block contents %}
+<p>
+{{ error }}
+</p>
+<form name="login" action="/login" method="post" >
+  <input type="text" name="username" autofocus />
+  <br />
+  <input type="password" name="password" />
+  <br />
+  <input type="submit" value="LogIn" />
+</form>
+{% endblock %}
