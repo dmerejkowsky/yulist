@@ -1,8 +1,8 @@
+import argparse
 import pathlib
 
 import pymongo
 
-import yulist.config
 import yulist.parser
 
 
@@ -55,8 +55,10 @@ def dump(src_path, db):
 
 
 def main():
-    config = yulist.config.read_conf()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("src_path", type=pathlib.Path)
+    args = parser.parse_args()
+    src_path = args.src_path
     client = pymongo.MongoClient()
     db = client.yulist
-    src = pathlib.Path(config["src"])
-    dump(src, db)
+    dump(src_path, db)
