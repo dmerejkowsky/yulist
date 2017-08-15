@@ -1,8 +1,16 @@
 title: Unexpected cover songs
 
+items_type: song
+
 intro:
      |
      Sometimes, an artist finds a new an _unexpected_ way
      of playing an already existing song.
 
-     Here's a list of some of my favorites:
+     Here's a list of some of my favorites
+
+items:
+  - title: Here comes the sun
+    artist: Nina Simone
+  - title: Here comes the sun
+    artist: The Beatles
