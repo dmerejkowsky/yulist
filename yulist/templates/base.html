@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 
-{% include 'head.html' %}
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="generator" content="yulist" />
+  <link rel="stylesheet" href="/static/style.css" />
+  <title>{% block title %}{% endblock %}</title>
+</head>
 
 <body>
 
@@ -10,8 +16,5 @@
 
 {% block contents %}
 {% endblock %}
-
-
-{%include 'footer.html' %}
 
 </body>
