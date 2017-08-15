@@ -40,6 +40,12 @@ class User:
         return self.user_id
 
 
+@app.errorhandler(404)
+# pylint: disable=unused-argument
+def not_found(error):
+    return flask.render_template("not_found.html"), 404
+
+
 @login_manager.user_loader
 def load_user(user_id):
     matches = list(app.db.users.find({"user_id": user_id}))
@@ -127,7 +133,11 @@ def display_page(page_path):
     db = app.db
     itemsdb = db.items
     pages = db.pages
-    page = pages.find({"path": page_path})[0]
+    try:
+        page = pages.find({"path": page_path})[0]
+    except IndexError:
+        flask.abort(404)
+
     if can_show(page):
         items = itemsdb.find({"page_id": page["_id"]})
     else:

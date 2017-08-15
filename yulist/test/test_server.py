@@ -78,3 +78,9 @@ def test_login_no_such_user(full_db, browser):
 
     browser.submit_form("/login", username="nosuchuser", password="p4ssw0rd")
     assert "User not found" in browser.page
+
+
+def test_not_found(full_db, client):
+    response = client.get("/nosuch")
+    assert response.status_code == 404
+    assert "not found" in response.data.decode()
