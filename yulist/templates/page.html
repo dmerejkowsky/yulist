@@ -3,71 +3,77 @@
 {% block title %}YuList{% endblock %}
 
 {% block contents %}
-<div id="contents">
 
 <h1>{{ title }}</h1>
 
 {% if current_user.is_authenticated %}
-<div id="session">
-<p>
-Logged in as {{ current_user.user_id }} <br />
-<a href="/logout">logout</a>
-</p>
-</div>
-{% endif %}
-
-{% if intro %}
-{{ intro }}
-{% endif %}
-
-{% if sections and outline %}
-<div id="outline">
-  <h3>Outline</h3>
-  <ul>
-  {% for section in sections %}
-  <li><a href="#{{ section | slug }}">{{ section }}</a></li>
-  {% endfor %}
-  </ul>
-</div>
+  <div id="session">
+  <p>
+  Logged in as {{ current_user.user_id }} <br />
+  <a href="/logout">logout</a>
+  </p>
+  </div>
 {% endif %}
 
 
-{% if items %}
-  {% for section, items in items %}
-    {% if section %}
-    <h3 id="{{ section | slug }}"> {{ section }} </h3>
-    {% endif %}
+<div id="contents">
+
+{% if private and not current_user.is_authenticated %}
+  <p>This page is private</p>
+{% else %}
+
+  {% if intro %}
+  {{ intro }}
+  {% endif %}
+
+  {% if sections and outline %}
+  <div id="outline">
+    <h3>Outline</h3>
     <ul>
-    {% for item in items %}
-      <li>
-        {{ item.inner_html }}
-      </li>
+    {% for section in sections %}
+    <li><a href="#{{ section | slug }}">{{ section }}</a></li>
     {% endfor %}
     </ul>
-  {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if items %}
+    {% for section, items in items %}
+      {% if section %}
+      <h3 id="{{ section | slug }}"> {{ section }} </h3>
+      {% endif %}
+      <ul>
+      {% for item in items %}
+        <li>
+          {{ item.inner_html }}
+        </li>
+      {% endfor %}
+      </ul>
+    {% endfor %}
+  {% endif %}
+
+  {% if outro %}
+    {{ outro }}
+  {% endif %}
+
+  {% if toc %}
+    <div id="toc">
+      <h2>{{ toc_text }}</h2>
+      <ul>
+      {% for toc_entry in toc %}
+        <li>{{ toc_entry }}</li>
+      {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  <script data-isso="//yulist.dmerej.info/isso/"
+          src="//yulist.dmerej.info/isso/js/embed.min.js">
+  </script>
+  <section id="isso-thread">
+  </section>
+
 {% endif %}
-
-{% if outro %}
-{{ outro }}
-{% endif %}
-
-{% if toc %}
-<div id="toc">
-  <h2>{{ toc_text }}</h2>
-  <ul>
-  {% for toc_entry in toc %}
-    <li>{{ toc_entry }}</li>
-  {% endfor %}
-  </ul>
-</div>
-{% endif %}
-
-<script data-isso="//yulist.dmerej.info/isso/"
-        src="//yulist.dmerej.info/isso/js/embed.min.js">
-</script>
-<section id="isso-thread">
-</section>
-
 </div>
 {% endblock %}
 
@@ -75,19 +81,17 @@ Logged in as {{ current_user.user_id }} <br />
 {% block navigation %}
 <div id="navigation">
 <p>
-<ul>
   <a href="/">Home</a> | <a href="/search">Search</a>
-</ul>
 </p>
 {% if bread_crumbs | length >=2 %}
+<p>
 <em>You are here:</em>
 <ul>
 {% for bread_crumb in bread_crumbs %}
   <li class="crumb">{{ bread_crumb }}</li>
 {% endfor %}
 </ul>
-{% endif %}
 </p>
-</div>
+{% endif %}
 </div>
 {% endblock %}
