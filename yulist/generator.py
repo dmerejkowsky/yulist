@@ -72,6 +72,9 @@ class Generator():
             text = page_parts[i-1]
             link = "/" + "/".join(page_parts[0:i]) + "/index"
             links.append({"link": link, "text": text})
+        last_part = page_parts[-1]
+        if last_part != "index":
+            links.append({"link": "/" + page["path"], "text": last_part})
         res = [self.render("link", x) for x in links]
         return res
 

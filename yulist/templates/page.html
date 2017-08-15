@@ -68,23 +68,26 @@ Logged in as {{ current_user.user_id }} <br />
 <section id="isso-thread">
 </section>
 
-<div id="search">
-  <p>
-  <a href="/search">Search</a>
-  </p>
-</div>
-
 </div>
 {% endblock %}
 
 
 {% block navigation %}
 <div id="navigation">
+<p>
+<ul>
+  <a href="/">Home</a> | <a href="/search">Search</a>
+</ul>
+</p>
+{% if bread_crumbs | length >=2 %}
 <em>You are here:</em>
 <ul>
 {% for bread_crumb in bread_crumbs %}
   <li class="crumb">{{ bread_crumb }}</li>
 {% endfor %}
 </ul>
+{% endif %}
+</p>
+</div>
 </div>
 {% endblock %}
