@@ -58,7 +58,6 @@
 
   {% if toc %}
     <div id="toc">
-      <h2>{{ toc_text }}</h2>
       <ul>
       {% for toc_entry in toc %}
         <li>{{ toc_entry }}</li>
@@ -84,14 +83,16 @@
   <a href="/">Home</a> | <a href="/search">Search</a>
 </p>
 {% if bread_crumbs | length >=2 %}
-<p>
-<em>You are here:</em>
 <ul>
+  <li class="you-are-here"><em>You are here:</em></li>
 {% for bread_crumb in bread_crumbs %}
-  <li class="crumb">{{ bread_crumb }}</li>
+  <li class="crumb">{{ bread_crumb }}
+  {% if not loop.last %}
+  /
+  {% endif %}
+  </li>
 {% endfor %}
 </ul>
-</p>
 {% endif %}
 </div>
 {% endblock %}

@@ -44,7 +44,6 @@ h6.invisible {
 #navigation li+li:before {
   padding: 2px;
   color: black;
-  content: "/\00a0";
 }
 
 #navigation li:last-child {
