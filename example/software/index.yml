@@ -2,25 +2,27 @@ title: Software
 
 intro:
   |
-  Here's a list of pieces of software I found or use.
-
-  First, a unsorted list:
-
-outro:
-  |
-  And here are some other pieces of software, grouped by categories.
+  Here's of software tools I found or use
 
 items_type: link
 
 
-items:
-  - text: "addinclude: Add missing includes to source files"
-    link: "http://addinclude.roboticoverlords.org/"
-  - text: "asciinema: Record and share your terminal sessions"
-    link: "https://asciinema.org"
+sections:
+  - name: Misc
+    items:
+    - text: "addinclude: Add missing includes to source files"
+      link: "http://addinclude.roboticoverlords.org/"
+    - text: "asciinema: Record and share your terminal sessions"
+      link: "https://asciinema.org"
 
-toc:
-  - text: Builing stuff
-    path: build/index
-  - text: For Python
-    path: python/index
+  - name: Building stuff
+    items:
+      - text: "Bazel"
+        link: "http://bazel.io"
+      - text: "Conan"
+        link: "https://conan.io"
+
+  - name: For Python
+    items:
+      - text: "Clint"
+        link: "https://clint.io"

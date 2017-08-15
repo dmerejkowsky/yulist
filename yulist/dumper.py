@@ -1,4 +1,5 @@
 import argparse
+import itertools
 import pathlib
 
 import pymongo
@@ -25,8 +26,45 @@ class Dumper:
             self.dump_page(page)
 
     def dump_page(self, page):
-        page_id = self.db.pages.insert_one(
+        page_id = self.dump_page_metada(page)
+        self.dump_items(page, page_id)
+
+    def dump_items(self, page, page_id):
+        top_items = self.yield_top_items(page)
+        other_items = self.yield_section_items(page)
+        all_items = list(itertools.chain(top_items, other_items))
+        if not all_items:
+            return
+        item_type = page.get("items_type")
+        if not item_type:
+            message = (
+                "Page {path} contains items, but does not have "
+                "`items_type` set"
+            )
+            raise yulist.Error(message.format(path=page["path"]))
+        for item in all_items:
+            item["page_id"] = page_id
+            item["type"] = item_type
+            self.db.items.insert_one(item)
+
+    @staticmethod
+    def yield_top_items(page):
+        yield from page.get("items", list())
+
+    @staticmethod
+    def yield_section_items(page):
+        sections = page.get("sections", list())
+        for section in sections:
+            items = section.get("items", list())
+            for item in items:
+                item["section"] = section["name"]
+                yield item
+
+    def dump_page_metada(self, page):
+        sections = [x["name"] for x in page.get("sections", list())]
+        query = self.db.pages.insert_one(
             {
+                "sections": sections,
                 "title": page["title"],
                 "path": str(page["path"]),
                 "intro": page.get("intro"),
@@ -34,17 +72,8 @@ class Dumper:
                 "toc": page.get("toc"),
                 "private": page.get("private"),
             }
-        ).inserted_id
-        for item in page.get("items", list()):
-            item_type = page.get("items_type")
-            if not item_type:
-                raise Exception("Page %s does not contain items_type" % page["path"])
-            self.dump_item(item, page_id=page_id, item_type=item_type)
-
-    def dump_item(self, item, *, page_id, item_type):
-        item["page_id"] = page_id
-        item["type"] = item_type
-        self.db.items.insert_one(item)
+        )
+        return query.inserted_id
 
 
 def dump(src_path, db):

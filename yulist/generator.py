@@ -1,4 +1,5 @@
 import copy
+import itertools
 import pathlib
 
 import jinja2
@@ -20,16 +21,16 @@ class Generator():
         page_data["outro"] = self.get_outro(page)
         page_data["toc"] = self.get_toc(page)
         page_data["bread_crumbs"] = self.get_bread_crumbs(page)
-        page_data["items"] = self.get_items(items)
-
+        items = self.get_items(items)
+        by_section = itertools.groupby(items, lambda x: x.get("section"))
+        page_data["items"] = by_section
         return self.render("page", page_data)
 
     def generate_search_results(self, pattern, items):
-        page_links = [x["page_link"] for x in items]
         generated_items = self.get_items(items)
         data = dict()
         data["pattern"] = pattern
-        data["results"] = [(x, x_link) for x, x_link in zip(generated_items, page_links)]
+        data["results"] = generated_items
         return self.render("search_results", data)
 
     @staticmethod
@@ -86,7 +87,9 @@ class Generator():
 
     def process_item(self, item):
         item_type = item["type"]
-        return self.render(item_type, item)
+        inner_html = self.render(item_type, item)
+        item["inner_html"] = inner_html
+        return item
 
     def render(self, template_name, data):
         data["current_user"] = self.current_user

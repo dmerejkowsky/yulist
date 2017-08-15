@@ -7,8 +7,8 @@
 
 {% if results %}
   <ul>
-  {% for item, page_link in results %}
-    <li>{{ item }} (in <a href="{{ page_link }}">{{ page_link }}</a>)</li>
+  {% for item in results %}
+    <li>{{ item.inner_html }} (in <a href="{{ item.page_link }}">{{ item.page_link }}</a>)</li>
   {% endfor %}
   </ul>
 {% else %}

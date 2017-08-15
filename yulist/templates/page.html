@@ -21,13 +21,18 @@ Logged in as {{ current_user.user_id }} <br />
 {% endif %}
 
 {% if items %}
-  <ul>
-  {% for item in items %}
-    <li>
-      {{ item }}
-    </li>
+  {% for section, items in items %}
+    {% if section %}
+    <h3> {{ section }} </h3>
+    {% endif %}
+    <ul>
+    {% for item in items %}
+      <li>
+        {{ item.inner_html }}
+      </li>
+    {% endfor %}
+    </ul>
   {% endfor %}
-  </ul>
 {% endif %}
 
 {% if outro %}

@@ -19,6 +19,7 @@ def test_follow_links(browser):
     covers_link = browser.find_link("Cover songs")
     browser.click_link(covers_link)
     assert "favorites" in browser.page
+    assert "Nina Simone" in browser.page
 
     # Following navigation:
     music_link = browser.find_link("music")
@@ -35,7 +36,7 @@ def test_perform_search(browser):
     browser.open("/search?pattern=bazel")
     assert "Search results" in browser.page
     assert "bazel.io" in browser.page
-    page_link = browser.find_link("software/build/index")
+    page_link = browser.find_link("software/index")
     assert page_link
 
 

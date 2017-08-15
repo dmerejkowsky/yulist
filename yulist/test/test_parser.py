@@ -17,3 +17,10 @@ def test_parse(example_path):
 
     mcu = [x for x in items if x["title"] == "Marvel Cinematic Universe"][0]
     assert str(mcu["path"]) == "video/movies/mcu"
+
+
+def test_parse_sections(example_path):
+    parser = yulist.parser.Parser(example_path)
+    parsed = parser.parse_file(example_path / "software/index.yml")
+    contents = next(parsed)
+    print(contents)
