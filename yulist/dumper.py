@@ -26,8 +26,11 @@ class Dumper:
             self.dump_page(page)
 
     def dump_page(self, page):
-        page_id = self.dump_page_metada(page)
-        self.dump_items(page, page_id)
+        try:
+            page_id = self.dump_page_metada(page)
+            self.dump_items(page, page_id)
+        except Exception as error:
+            raise yulist.Error("Could not dump", page["path"]) from error
 
     def dump_items(self, page, page_id):
         top_items = self.yield_top_items(page)
