@@ -65,6 +65,7 @@ class Dumper:
         query = self.db.pages.insert_one(
             {
                 "sections": sections,
+                "outline": page.get("outline"),
                 "title": page["title"],
                 "path": str(page["path"]),
                 "intro": page.get("intro"),

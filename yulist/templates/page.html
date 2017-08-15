@@ -20,6 +20,18 @@ Logged in as {{ current_user.user_id }} <br />
 {{ intro }}
 {% endif %}
 
+{% if sections and outline %}
+<div id="outline">
+  <h3>Outline</h3>
+  <ul>
+  {% for section in sections %}
+  <li><a href="#{{ section | slug }}">{{ section }}</a></li>
+  {% endfor %}
+  </ul>
+</div>
+{% endif %}
+
+
 {% if items %}
   {% for section, items in items %}
     {% if section %}
