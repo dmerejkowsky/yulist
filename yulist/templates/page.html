@@ -23,7 +23,7 @@ Logged in as {{ current_user.user_id }} <br />
 {% if items %}
   {% for section, items in items %}
     {% if section %}
-    <h3> {{ section }} </h3>
+    <h3 id="{{ section | slug }}"> {{ section }} </h3>
     {% endif %}
     <ul>
     {% for item in items %}

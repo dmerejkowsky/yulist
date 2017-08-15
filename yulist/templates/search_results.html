@@ -8,7 +8,7 @@
 {% if results %}
   <ul>
   {% for item in results %}
-    <li>{{ item.inner_html }} (in <a href="{{ item.page_link }}">{{ item.page_link }}</a>)</li>
+  <li>{{ item.inner_html }} (in <a href="{{ item.page_link }}#{{ item.section | slug }}">{{ item.page_link }}</a>)</li>
   {% endfor %}
   </ul>
 {% else %}

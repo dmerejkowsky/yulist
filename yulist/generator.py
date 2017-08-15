@@ -11,7 +11,8 @@ class Generator():
         loader = jinja2.PackageLoader("yulist", "templates")
         self.jinja_env = jinja2.Environment(loader=loader,
                                             trim_blocks=True,
-                                            lstrip_blocks=True)
+                                            lstrip_blocks=True,
+                                            extensions=["jinja2_slug.SlugExtension"])
         self.current_user = None
 
     def generate_page(self, page, items):
