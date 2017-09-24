@@ -21,11 +21,12 @@ setup(name="yulist",
         "jinja2-slug",
         "markdown",
         "pymongo",
+        "pytaglib",
         "ruamel.yaml",
       ],
       entry_points={
         "console_scripts": [
-          "yuilst-add = yulist.add:main",
+          "yulist-add = yulist.add:main",
           "yulist-dump = yulist.dumper:main",
           "yulist-server = yulist.server:main",
           "yulist-admin = yulist.admin:main",

@@ -1,8 +1,10 @@
+import pathlib
 import shutil
 
 import pytest
 
 import yulist.add
+import yulist.config
 import yulist.parser
 
 
@@ -15,9 +17,11 @@ def example_copy(example_path, tmp_path):
 
 def test_add_music_file(example_copy, empty_db):
     db = empty_db
-    song_path = "Songs/Kiss/Kiss - I Was Made For Loving You.mp3"
+    config = yulist.config.read_conf()
+    media_path = pathlib.Path(config["paths"]["media"])
+    song_path = media_path / "music/Songs/Kiss/Kiss - I Was Made For Loving You.mp3"
 
-    yulist.add.add_music(song_path, "evening")
+    yulist.add.add_music(example_copy, song_path, "evening")
 
     parser = yulist.parser.Parser(example_copy)
     items = list(parser.parse())
@@ -30,4 +34,4 @@ def test_add_music_file(example_copy, empty_db):
     last_song = list(evening_songs)[-1]
     assert last_song["artist"] == "Kiss"
     assert last_song["title"] == "I Was Made For Loving You"
-    assert last_song["path"] == song_path
+    assert last_song["music_path"] == "Songs/Kiss/Kiss - I Was Made For Loving You.mp3"

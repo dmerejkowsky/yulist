@@ -2,6 +2,8 @@ import copy
 import itertools
 import os
 import pathlib
+import posixpath
+import urllib
 
 import jinja2
 import markdown
@@ -104,8 +106,8 @@ class Generator():
         data["current_user"] = self.current_user
         music_path = data.get("music_path")
         if music_path:
-            data["media_url"] = os.path.join(self.base_media_url, "music", music_path)
-            print(data["media_url"])
+            encoded_path = urllib.parse.quote("music/" + music_path)
+            data["media_url"] = posixpath.join(self.base_media_url, encoded_path)
         template_name = template_name + ".html"
         template = self.jinja_env.get_template(template_name)
         return template.render(data)
