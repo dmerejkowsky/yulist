@@ -94,15 +94,18 @@ def login():
 @flask_login.login_required
 def logout():
     flask_login.logout_user()
-    return flask.redirect(flask.url_for('index'))
+    return flask.redirect(flask.url_for("index"))
 
 
 @app.route("/")
 def index():
+    if not flask_login.current_user.is_authenticated:
+        return flask.redirect(flask.url_for("login"))
     return display_page("index")
 
 
 @app.route("/search")
+@flask_login.login_required
 def search_form():
     pattern = flask.request.args.get("pattern")
     if pattern:
@@ -116,19 +119,13 @@ def do_search(db, pattern):
     cursor = db.items.find({"$text": {"$search": pattern}})
     for item in cursor:
         page = db.pages.find({"_id": item["page_id"]})[0]
-        if can_show(page):
-            page_link = page["path"]
-            item["page_link"] = page_link
-            yield item
-
-
-def can_show(page):
-    if page["private"] and not flask_login.current_user.is_authenticated:
-        return False
-    return True
+        page_link = page["path"]
+        item["page_link"] = page_link
+        yield item
 
 
 @app.route("/<path:page_path>")
+@flask_login.login_required
 def display_page(page_path):
     db = app.db
     itemsdb = db.items
@@ -138,10 +135,7 @@ def display_page(page_path):
     except IndexError:
         flask.abort(404)
 
-    if can_show(page):
-        items = itemsdb.find({"page_id": page["_id"]})
-    else:
-        items = list()
+    items = itemsdb.find({"page_id": page["_id"]})
     generator = app.generator
     generator.current_user = flask_login.current_user
     res = generator.generate_page(page, items)

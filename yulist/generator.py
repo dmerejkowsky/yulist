@@ -1,9 +1,12 @@
 import copy
 import itertools
+import os
 import pathlib
 
 import jinja2
 import markdown
+
+import yulist.config
 
 
 class Generator():
@@ -14,6 +17,8 @@ class Generator():
                                             lstrip_blocks=True,
                                             extensions=["jinja2_slug.SlugExtension"])
         self.current_user = None
+        conf = yulist.config.read_conf()
+        self.base_media_url = conf["server"]["media_url"]
 
     def generate_page(self, page, items):
         page_data = copy.copy(page)
@@ -97,6 +102,10 @@ class Generator():
 
     def render(self, template_name, data):
         data["current_user"] = self.current_user
+        music_path = data.get("music_path")
+        if music_path:
+            data["media_url"] = os.path.join(self.base_media_url, "music", music_path)
+            print(data["media_url"])
         template_name = template_name + ".html"
         template = self.jinja_env.get_template(template_name)
         return template.render(data)
