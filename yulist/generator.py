@@ -1,6 +1,5 @@
 import copy
 import itertools
-import os
 import pathlib
 import posixpath
 import urllib

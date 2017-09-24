@@ -14,6 +14,7 @@ def add_music(text_db_path, music_path, kind):
     media_path = pathlib.Path(cfg["paths"]["media"])
     music_root_path = media_path / "music"
 
+    # pylint: disable=no-member
     tagfile = taglib.File(str(music_path))
     artist = tagfile.tags["ARTIST"][0]
     title = tagfile.tags["TITLE"][0]
