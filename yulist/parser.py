@@ -2,11 +2,11 @@ import ruamel.yaml
 
 
 class Parser():
-    def __init__(self, src_path):
-        self.src_path = src_path
+    def __init__(self, text_db_path):
+        self.text_db_path = text_db_path
 
     def parse(self):
-        top_yml = self.src_path / "index.yml"
+        top_yml = self.text_db_path / "index.yml"
         yield from self.parse_file(top_yml)
 
     def parse_file(self, yml_path):
@@ -16,7 +16,7 @@ class Parser():
 
         with yml_path.open() as stream:
             contents = ruamel.yaml.safe_load(stream)
-        rel_path = yml_path.relative_to(self.src_path)
+        rel_path = yml_path.relative_to(self.text_db_path)
         rel_path = rel_path.with_suffix("")
         contents["path"] = rel_path
         yield contents

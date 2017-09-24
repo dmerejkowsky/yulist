@@ -79,8 +79,8 @@ class Dumper:
         return query.inserted_id
 
 
-def dump(src_path, db):
-    parser = yulist.parser.Parser(src_path)
+def dump(text_db_path, db):
+    parser = yulist.parser.Parser(text_db_path)
     dumper = Dumper(parser, db)
     dumper.dump()
     total_pages = db.pages.count()
@@ -90,9 +90,9 @@ def dump(src_path, db):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("src_path", type=pathlib.Path)
+    parser.add_argument("text_db_path", type=pathlib.Path)
     args = parser.parse_args()
-    src_path = args.src_path
+    text_db_path = args.text_db_path
     client = pymongo.MongoClient()
     db = client.yulist
-    dump(src_path, db)
+    dump(text_db_path, db)
