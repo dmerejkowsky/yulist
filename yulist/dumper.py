@@ -74,7 +74,6 @@ class Dumper:
                 "intro": page.get("intro"),
                 "outro": page.get("outro"),
                 "toc": page.get("toc"),
-                "private": page.get("private"),
             }
         )
         return query.inserted_id
@@ -84,12 +83,9 @@ def dump(src_path, db):
     parser = yulist.parser.Parser(src_path)
     dumper = Dumper(parser, db)
     dumper.dump()
-    private_pages = db.pages.count({"private": True})
     total_pages = db.pages.count()
     num_items = db.items.count()
-    print(
-        "Saved %i pages (%i private) and %i items" %
-        (total_pages, private_pages, num_items))
+    print("Saved %i pages and %i items" % (total_pages, num_items))
 
 
 def main():

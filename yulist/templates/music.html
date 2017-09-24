@@ -1,9 +1,6 @@
 <span class="song">
   {{ artist }} - &ldquo;{{ title }}&rdquo;
-{% if current_user.is_authenticated and private_url %}
-  {% set media_url = private_url %}
-{% endif %}
-{% if media_url %}
+  {% if media_url %}
   <a class="media_link" target="_blank" href="{{ media_url }}">🎵</a>
   {% endif %}
 </span>

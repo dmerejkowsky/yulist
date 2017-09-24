@@ -3,12 +3,19 @@ import pytest
 import yulist.admin
 
 
-def test_index(browser):
+@pytest.fixture
+def logged_in_user(full_db, browser):
+    yulist.admin.set_password(full_db, "admin", "p4ssw0rd")
+    browser.open("/login")
+    browser.submit_form("/login", username="admin", password="p4ssw0rd")
+
+
+def test_index(browser, logged_in_user):
     browser.open("/")
     assert "Welcome" in browser.page
 
 
-def test_follow_links(browser):
+def test_follow_links(browser, logged_in_user):
     # Following table of contents
     browser.open("/index")
     assert "Welcome" in browser.page
@@ -27,32 +34,17 @@ def test_follow_links(browser):
     assert "Music" in browser.page
 
 
-def test_search_form(browser):
+def test_search_form(browser, logged_in_user):
     browser.open("/search")
     assert "form" in browser.page
 
 
-def test_perform_search(browser):
+def test_perform_search(browser, logged_in_user):
     browser.open("/search?pattern=bazel")
     assert "Search results" in browser.page
     assert "bazel.io" in browser.page
     page_link = browser.find_link("software/index")
     assert page_link
-
-
-def test_when_not_logged_in_cannot_see_guilty_pleasures(browser):
-    browser.open("video/series/index")
-    assert "Guilty" not in browser.page
-    print(browser.page)
-
-
-def test_can_see_guilty_pleasures_when_logged_in(full_db, browser):
-    yulist.admin.set_password(full_db, "admin", "p4ssw0rd")
-    browser.open("/login")
-    browser.submit_form("/login", username="admin", password="p4ssw0rd")
-    assert "admin" in browser.page
-    browser.open("video/series/index")
-    assert "Guilty" in browser.page
 
 
 def test_can_login_logout(full_db, browser):
@@ -80,7 +72,7 @@ def test_login_no_such_user(full_db, browser):
     assert "User not found" in browser.page
 
 
-def test_not_found(full_db, client):
+def test_not_found(full_db, client, logged_in_user):
     response = client.get("/nosuch")
     assert response.status_code == 404
     assert "not found" in response.data.decode()
