@@ -1,4 +1,3 @@
-import argparse
 import itertools
 import pathlib
 
@@ -90,7 +89,6 @@ def dump(text_db_path, db):
 
 
 def main():
-    parser = argparse.ArgumentParser()
     cfg = yulist.config.read_conf()
     text_db_path = pathlib.Path(cfg["paths"]["text_db"])
     client = pymongo.MongoClient()
