@@ -22,6 +22,7 @@ setup(name="yulist",
         "markdown",
         "pymongo",
         "pytaglib",
+        "python-cli-ui",
         "ruamel.yaml",
       ],
       entry_points={
