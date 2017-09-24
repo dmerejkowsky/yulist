@@ -9,8 +9,6 @@ def test_dumps_to_mongo(example_path, empty_db):
     dumper = Dumper(parser, empty_db)
     dumper.dump()
     db = dumper.db
-    assert db.pages.count() == 13
-    assert db.items.count() == 14
 
     software_page = db.pages.find_one({"title": "Software"})
     assert software_page["sections"] == ["Misc", "Building stuff", "For Python"]
