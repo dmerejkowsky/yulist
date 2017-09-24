@@ -17,11 +17,6 @@ def tmp_path(tmpdir):
 
 
 @pytest.fixture
-def test_data():
-    return pathlib.Path(__file__).parent / "data"
-
-
-@pytest.fixture
 def example_path():
     return pathlib.Path(__file__).parent.parent.parent / "example"
 
