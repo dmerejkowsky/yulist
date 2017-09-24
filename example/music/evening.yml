@@ -1,1 +1,8 @@
 title: Music for the evening
+
+items_type: song
+
+items:
+  - artist: Jon Hopkins
+    title: Breathe This Air
+    path: "Songs/Jon Hopkins/Jon Hopkins - Breathe This Air.mp3"
