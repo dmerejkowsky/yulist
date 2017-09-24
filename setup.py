@@ -25,6 +25,7 @@ setup(name="yulist",
       ],
       entry_points={
         "console_scripts": [
+          "yuilst-add = yulist.add:main",
           "yulist-dump = yulist.dumper:main",
           "yulist-server = yulist.server:main",
           "yulist-admin = yulist.admin:main",
