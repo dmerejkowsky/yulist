@@ -6,14 +6,6 @@
 
 <h1>{{ title }}</h1>
 
-{% if current_user.is_authenticated %}
-  <div id="session">
-  <p>
-  Logged in as {{ current_user.user_id }} <br />
-  <a href="/logout">logout</a>
-  </p>
-  </div>
-{% endif %}
 
 
 <div id="contents">
@@ -63,6 +55,15 @@
   {% endif %}
 
 </div>
+
+{% if current_user.is_authenticated %}
+  <div id="session">
+  <p>
+  <a href="/logout">logout</a>
+  </p>
+  </div>
+{% endif %}
+
 {% endblock %}
 
 
@@ -84,4 +85,6 @@
 </ul>
 {% endif %}
 </div>
+
+
 {% endblock %}
